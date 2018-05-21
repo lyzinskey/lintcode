@@ -6,6 +6,7 @@
 //Pow(1, 0) = 1
 
 
+    //recursion solution
     public double myPow(double x, int n) {
         double ans = Integer.MIN_VALUE;
         if (n > 0){
@@ -25,11 +26,17 @@
         if (n == 0) {
             return 1;
         }
+        //n is double
         if (n % 2 == 0) {
             double temp = fastPow(x, n / 2);
             return temp * temp;
-        } else {
+        } 
+        //n is odd, have to multiple x one more time
+        else {
             double temp = fastPow(x, n / 2);
             return temp * temp * x;
         }
     }
+
+
+

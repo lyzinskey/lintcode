@@ -46,7 +46,7 @@ A: 为了避免死循环。二分法的模板中，整个程序架构分为两�
 通过 while 循环，将区间范围从 n 缩小到 2 （只有 start 和 end 两个点）。
 在 start 和 end 中判断是否有解。
 start < end 或者 start <= end 在寻找目标最后一次出现的位置的时候，出现死循环。
-例如在[1, 1]中找last position of 1， ruug哦
+例如在[1, 1]中找last position of 1，若while条件是start<end，则会导致
 
 Q: 为什么明明可以 start = mid + 1 偏偏要写成 start = mid?
 

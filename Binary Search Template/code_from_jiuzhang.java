@@ -10,7 +10,8 @@ public class Solution {
         }
         
         int start = 0, end = nums.length - 1;
-        // 要点1: start + 1 < end
+        // 要点1: start + 1 < end，避免死循环
+	// while循环退出时，start和end相邻
         while (start + 1 < end) {
 	    // 要点2：start + (end - start) / 2
             int mid = start + (end - start) / 2;
@@ -25,6 +26,7 @@ public class Solution {
         }
         
         // 要点4: 循环结束后，单独处理start和end
+	// while循环退出时，start和end相邻，故需单独判断start和end对应的值
         if (nums[start] == target) {
             return start;
         }
@@ -44,6 +46,7 @@ A: 为了避免死循环。二分法的模板中，整个程序架构分为两�
 通过 while 循环，将区间范围从 n 缩小到 2 （只有 start 和 end 两个点）。
 在 start 和 end 中判断是否有解。
 start < end 或者 start <= end 在寻找目标最后一次出现的位置的时候，出现死循环。
+例如在[1, 1]中找last position of 1， ruug哦
 
 Q: 为什么明明可以 start = mid + 1 偏偏要写成 start = mid?
 

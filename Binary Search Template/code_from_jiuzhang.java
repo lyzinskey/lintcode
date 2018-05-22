@@ -14,6 +14,7 @@ public class Solution {
 	// while循环退出时，start和end相邻
         while (start + 1 < end) {
 	    // 要点2：start + (end - start) / 2
+	    // 防溢出，start和end可能会达到int类型的最大值，此时若(start + end) / 2会溢出
             int mid = start + (end - start) / 2;
             // 要点3：=, <, > 分开讨论，mid 不+1也不-1
             if (nums[mid] == target) {

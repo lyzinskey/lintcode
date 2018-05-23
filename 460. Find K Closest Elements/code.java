@@ -47,7 +47,7 @@
     }
 
     private int findLowerClosest(int[] A, int target) {
-        // find the last element smaller than target
+        // find the biggest element smaller than target
         int start = 0, end = A.length - 1;
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;

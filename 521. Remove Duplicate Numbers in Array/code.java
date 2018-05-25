@@ -32,7 +32,7 @@
     }
     
     
-        //solve in O(nlogn) time without extra space
+    //solve in O(nlogn) time without extra space
     //using two pointers
     public int deduplication(int[] nums) {
         if (nums == null || nums.length == 0){

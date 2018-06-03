@@ -6,6 +6,8 @@ set.add(start);
 queue.offer(start);
 while (!queue.isEmpty()) {
     int size = queue.size();
+    //这里你可以在每个for结束之后做一些其他的跟分层有关的事比如每一层遍历完打印一个“|”，在不分层的方法中就无法判断什么时候一层结束。
+    //因此虽然最后的结果都是一样的，但是分层的方法我们能知道每层确切的遍历结束时刻。
     for (int i = 0; i < size; i++) {
         T head = queue.poll();
         for (T neighbor : head.neighbors) {

@@ -35,7 +35,7 @@
         Set<UndirectedGraphNode> endVisited = new HashSet<>();
         startVisited.add(start);
         endVisited.add(end);
-        while (!startQueue.isEmpty() || !endQueue.isEmpty()) {
+        while (!startQueue.isEmpty() && !endQueue.isEmpty()) {
             int startSize = startQueue.size();
             int endSize = endQueue.size();
             // 按层遍历

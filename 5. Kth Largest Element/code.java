@@ -14,11 +14,14 @@
         while(low <= high){  
             int pivot = nums[high];
             int index = low-1;
+            //把所有比pivot大的数字全部集中在左侧
             for(int i = low; i < high; i++){
                 if(nums[i] > nums[high]){
                     swap(nums, i, ++index);
                 }
             }
+            
+            //让index左侧全是大于pivot的数，右侧全是小于pivot的数
             swap(nums, ++index, high);
             if(index == k - 1){
                 return nums[index];

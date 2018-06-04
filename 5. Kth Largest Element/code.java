@@ -10,7 +10,7 @@
 
 
     public int kthLargestElement(int k, int[] nums) {
-        int low = 0, high = nums.length -1;
+        int low = 0, high = nums.length - 1;
         while(low <= high){  
             int pivot = nums[high];
             int index = low-1;
@@ -26,7 +26,7 @@
             if(index == k - 1){
                 return nums[index];
             }
-            if(index < k -1){
+            if(index < k - 1){
                 low = index + 1;
             }else{
                 high = index - 1;

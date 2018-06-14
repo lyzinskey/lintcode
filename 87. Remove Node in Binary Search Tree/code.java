@@ -123,20 +123,14 @@ public class Solution {
         //若待删除节点左右子树均不为空，那么找到右子树的最小值，
         //将待删除节点的值赋为该最小值，同时删除最小值对应的节点
         if (node.left != null && node.right != null) {
-            TreeNode minNode = node;
-            TreeNode minNodeParent = parent;
+            TreeNode minNode = node.right;
+            TreeNode minNodeParent = node;
             while (minNode.left != null) {
                 minNodeParent = minNode;
                 minNode = minNode.left;
             }
             node.val = minNode.val;
-            if (minNodeParent.left == minNode){
-                minNodeParent.left = null;
-            }
-            else {
-                minNodeParent.right = null;
-            }
-            
+            deleteNode(minNodeParent, minNode);            
         }
     }
 }

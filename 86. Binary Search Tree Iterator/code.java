@@ -57,6 +57,7 @@ public class BSTIterator {
     private Stack<TreeNode> stack = new Stack<>();
     private TreeNode curr;
     
+    //对stack进行初始化，一路push节点进stack直到整个树的最小节点（即最左侧的节点）    
     public BSTIterator(TreeNode root) {
         while (root != null) {
             stack.push(root);
@@ -96,4 +97,5 @@ public class BSTIterator {
         return curr;
     }
 }
+
 

@@ -105,11 +105,12 @@ public class Solution {
  * }
  */
 class ResultType {
-    public boolean a_exist, b_exist;
+    public boolean existA, existB;
     public TreeNode node;
+
     ResultType(boolean a, boolean b, TreeNode n) {
-        a_exist = a;
-        b_exist = b;
+        existA = a;
+        existB = b;
         node = n;
     }
 }
@@ -123,7 +124,7 @@ public class Solution {
     public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode A, TreeNode B) {
         // write your code here
         ResultType rt = helper(root, A, B);
-        if (rt.a_exist && rt.b_exist)
+        if (rt.existA && rt.existB)
             return rt.node;
         else
             return null;
@@ -132,13 +133,13 @@ public class Solution {
     public ResultType helper(TreeNode root, TreeNode A, TreeNode B) {
         if (root == null)
             return new ResultType(false, false, null);
-            
+
         ResultType left_rt = helper(root.left, A, B);
         ResultType right_rt = helper(root.right, A, B);
-        
-        boolean a_exist = left_rt.a_exist || right_rt.a_exist || root == A;
-        boolean b_exist = left_rt.b_exist || right_rt.b_exist || root == B;
-        
+
+        boolean a_exist = left_rt.existA || right_rt.existA || root == A;
+        boolean b_exist = left_rt.existB || right_rt.existB || root == B;
+
         if (root == A || root == B)
             return new ResultType(a_exist, b_exist, root);
 

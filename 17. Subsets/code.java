@@ -21,6 +21,7 @@
 //Can you do it in both recursively and iteratively?
 
 
+
 // 递归：实现方式，一种实现DFS算法的一种方式
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
@@ -34,6 +35,8 @@
             return result;
         }
         
+        //此处排序仅仅是因为Lintcode答案只接受排序结果，
+        //这道题本身排不排序对最后的结果并不影响
         Arrays.sort(nums);
         helper(new ArrayList<Integer>(), nums, 0, result);
         return result;
@@ -61,7 +64,8 @@
     }
     
     
-    
+
+
 //非递归：使用宽度优先搜索算法的做法（BFS）
 //一层一层的找到所有的子集：
 //
@@ -76,7 +80,9 @@
         if (nums == null) {
             return results; // 空列表
         }
-        
+
+        //此处排序仅仅是因为Lintcode答案只接受排序结果，
+        //这道题本身排不排序对最后的结果并不影响            
         Arrays.sort(nums);
         
         // BFS
@@ -100,3 +106,41 @@
     }
     
     
+
+
+//使用组合类搜索的专用深度优先搜索算法。
+//一层一层的决策每个数要不要放到最后的集合里。
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        
+        //此处排序仅仅是因为Lintcode答案只接受排序结果，
+        //这道题本身排不排序对最后的结果并不影响        
+        Arrays.sort(nums);
+        dfs(nums, 0, new ArrayList<Integer>(), results);
+        return results;
+    }
+    
+    // 1. 递归的定义
+    // 以 subset 开头的，配上 nums 以 index 开始的数所有组合放到 results 里
+    private void dfs(int[] nums,
+                     int index,
+                     List<Integer> subset,
+                     List<List<Integer>> results) {
+        // 3. 递归的出口
+        if (index == nums.length) {
+            results.add(new ArrayList<Integer>(subset));
+            return;
+        }
+        
+        // 2. 递归的拆解
+        // (如何进入下一层)
+        
+        // 选了 nums[index]
+        subset.add(nums[index]);
+        dfs(nums, index + 1, subset, results);
+        
+        // 不选 nums[index]
+        subset.remove(subset.size() - 1);
+        dfs(nums, index + 1, subset, results);
+    }
+

@@ -35,8 +35,6 @@
             return result;
         }
         
-        //此处排序仅仅是因为Lintcode答案只接受排序结果，
-        //这道题本身排不排序对最后的结果并不影响
         Arrays.sort(nums);
         helper(new ArrayList<Integer>(), nums, 0, result);
         return result;
@@ -80,9 +78,7 @@
         if (nums == null) {
             return results; // 空列表
         }
-
-        //此处排序仅仅是因为Lintcode答案只接受排序结果，
-        //这道题本身排不排序对最后的结果并不影响            
+          
         Arrays.sort(nums);
         
         // BFS
@@ -112,9 +108,7 @@
 //一层一层的决策每个数要不要放到最后的集合里。
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> results = new ArrayList<>();
-        
-        //此处排序仅仅是因为Lintcode答案只接受排序结果，
-        //这道题本身排不排序对最后的结果并不影响        
+       
         Arrays.sort(nums);
         dfs(nums, 0, new ArrayList<Integer>(), results);
         return results;

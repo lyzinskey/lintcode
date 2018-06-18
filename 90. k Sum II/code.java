@@ -25,7 +25,6 @@ public class Solution {
             return result;
         }
         ArrayList<Integer> subset = new ArrayList<>();
-        Arrays.sort(candidates);
         dfs(candidates, target, 0, result, subset, k);
         
         return result;        

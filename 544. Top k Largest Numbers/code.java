@@ -16,7 +16,7 @@ public class Solution {
         PriorityQueue<Integer> minheap = new PriorityQueue<Integer>(k, new topkComparator());
 
         for (int i : nums) {
-            minheap.add(i);
+            minheap.offer(i);
             if (minheap.size() > k) {
                 minheap.poll();
             }

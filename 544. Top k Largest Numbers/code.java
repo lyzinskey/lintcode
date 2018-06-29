@@ -6,14 +6,8 @@
 
 
 
-public class Solution {
-    /**
-     * @param nums: an integer array
-     * @param k: An integer
-     * @return: the top k largest numbers in array
-     */
     public int[] topk(int[] nums, int k) {
-        PriorityQueue<Integer> minheap = new PriorityQueue<Integer>(k, new topkComparator());
+        PriorityQueue<Integer> minheap = new PriorityQueue<>();
 
         for (int i : nums) {
             minheap.offer(i);
@@ -28,12 +22,5 @@ public class Solution {
         }
         return result;
     }
-}
-
-class topkComparator implements Comparator<Integer> {
-    public int compare(Integer a, Integer b) {
-        return a - b;
-    }
-}
 
 

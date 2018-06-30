@@ -75,7 +75,7 @@ public class RandomizedSet {
             hashmap.put(lastVal, index);            
         }
         
-        //The second point is that the complexity of ArrayList.remove(index) 
+        //The complexity of ArrayList.remove(index) 
         //is sensitive to the value of index as well as the list length.
         //The "advertised" complexity of O(N) for the average and worst cases.
         //In the best case, the complexity is actually O(1).

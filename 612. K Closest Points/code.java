@@ -24,6 +24,15 @@
  * }
  */
 
+
+
+//使用 Heapify 的方法
+
+//heapify 时间复杂度 O(n)
+//然后 pop k 个点出来，时间复杂度 klogn
+//总的时间复杂度 O(n + klogn)
+//如果 n >> k 的话，这种方法的时间复杂度是很优秀的。
+//
 public class Solution {
     
     private Point origin;
@@ -110,5 +119,52 @@ public class Solution {
         return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
     }
 }
+
+
+
+
+//基于 PriorityQueue 的方法
+//PriorityQueue 里从远到近排序。当 PQ 里超过 k 个的时候，就 pop 掉一个。
+//时间复杂度 O(nlogk)
+//
+    public Point[] kClosest(Point[] points, Point origin, int k) {
+        if (points == null || points.length == 0) {
+            return points;
+        }
+
+        PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                int diff = distance(o2, origin) - distance(o1, origin);
+                if (diff == 0) {
+                    diff = o2.x - o1.x;
+                }
+                if (diff == 0) {
+                    diff = o2.y - o1.y;
+                }
+                return diff;
+            }
+        });
+
+        for (int i = 0; i < points.length; i++) {
+            maxHeap.add(points[i]);
+            
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
+            }
+        }
+
+        Point[] results = new Point[k];
+
+        for (int i = k - 1; i >= 0; i--) {
+            results[i] = maxHeap.poll();
+        }
+        
+        return results;
+    }
+
+    private int distance(Point a, Point b) {
+        return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+    }    
 
 

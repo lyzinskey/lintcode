@@ -1,1 +1,1 @@
-# lintcode
+# lintcode solution

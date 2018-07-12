@@ -3,7 +3,9 @@
 
 //Example
 //Input:nums = [1,1,1], k = 2
-/Output: 2
+//Output: 2
+
+
 
 // The idea behind this approach is as follows: 
 // If the cumulative sum(represented by sum[i] for sum upto i^{th} index) upto two indices is the same, 

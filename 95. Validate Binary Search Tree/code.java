@@ -19,8 +19,7 @@
 
 
 
-//use inorder traversal
-//
+
 /**
  * Definition of TreeNode:
  * public class TreeNode {
@@ -33,11 +32,11 @@
  * }
  */
 
+
+
+//use inorder traversal
+//
 public class Solution {
-    /**
-     * @param root: The root of binary tree.
-     * @return: True if the binary tree is BST, or false
-     */
     private boolean isValid;
     private TreeNode lastNode;
     
@@ -65,9 +64,10 @@ public class Solution {
 }
 
 
+
+
 //Divide & Conquer
 //
-
 class ResultType {
     public boolean isValid;
     public TreeNode maxNode;
@@ -129,4 +129,30 @@ public class Solution {
     }
     
 }
+
+
+
+
+
+// Recursion
+//
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return BST_helper(root, Integer.MAX_VALUE, Integer.MIN_VALUE);
+    }
+  
+    private boolean BST_helper(TreeNode root, int max, int min) {
+        if (root == null) {
+            return true;
+        }
+    
+        if (root.val < min || root.val > max) {
+            return false;
+        }
+    
+        return BST_helper(root.left, root.val - 1, min) && BST_helper(root.right, max, root.val + 1);
+    }          
+}
+
+
 

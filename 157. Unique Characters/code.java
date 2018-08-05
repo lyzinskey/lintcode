@@ -10,8 +10,11 @@
 
 
 
+// Solution 1
+// use boolean array
+//
     public boolean isUnique(String str) {
-        boolean[] charArray = new boolean[250];
+        boolean[] charArray = new boolean[256];
         
         for (int i = 0; i < str.length(); i++) {
             if (charArray[str.charAt(i)]) {
@@ -27,6 +30,9 @@
     
     
     
+// Solution 2
+// use hashset
+//
     public boolean isUnique(String str) {
         char[] charArray = str.toCharArray();
         Set<Character> hashset = new HashSet<>();
@@ -41,4 +47,31 @@
     }
     
     
+
+
+
+// Solution 3
+// use bit operation
+//
+    public boolean isUnique(String word) {
+        if (word == null || word.length() == 0) {
+            return true;
+        }
+
+        int[] bit_vector = new int[8];
+
+        for (int i = 0; i < word.length(); i++) {
+            int row = word.charAt(i) / 32;
+            int col = word.charAt(i) % 32;
+            int weight = 1 << col;
+            if ((bit_vector[row] & weight) != 0) {
+                return false;
+            }
+            bit_vector[row] |= weight;
+        }
+        return true;
+    }    
+
     
+
+

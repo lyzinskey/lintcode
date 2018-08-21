@@ -83,3 +83,54 @@ public class Solution {
 }
 
 
+
+
+
+// solution 2: DP
+//
+public class Solution {
+    /**
+     * @param matrix: the given matrix
+     * @return: the largest possible sum
+     */
+    
+    public int maxSubmatrix(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
+            return 0;
+        }
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int global_max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < row; i++) {
+            int[] largestSum = new int[col];
+
+            for (int j = i; j < row; j++) {
+                compression(largestSum, matrix[j]);
+                global_max = Math.max(global_max, largestSum(largestSum));
+            }
+        }
+        return global_max;
+    }
+
+    private void compression(int[] a, int[] b) {
+        for (int i = 0; i < a.length; i++) {
+            a[i] += b[i];
+        }
+    }
+
+    private int largestSum(int[] array) {
+        int last = array[0];
+        int max = array[0];
+
+        for (int i = 1; i < array.length; i++) {
+            last = Math.max(last + array[i], array[i]);
+            max = Math.max(max, last);
+        }
+        return max;
+    }
+}
+
+
+

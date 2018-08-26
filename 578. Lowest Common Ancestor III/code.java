@@ -154,3 +154,41 @@ public class Solution {
     }
 }
 
+
+
+
+
+// solution 2
+//
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode A, TreeNode B) {
+        TreeNode result = LCA(root, A, B);
+    
+        if (result == A) {
+            if (LCA(A, B, B) == null) {
+                return null;
+            }
+        }
+        if (result == B) {
+            if (LCA(B, A, A) == null) {
+                return null;
+            }
+        }       
+        return result;
+    }
+    
+    public TreeNode LCA(TreeNode root, TreeNode A, TreeNode B) {
+        if (root == null || root == A || root == B) {
+            return root;
+        }
+        
+        TreeNode left = LCA(root.left, A, B);
+        TreeNode right = LCA(root.right, A, B);
+        
+        if (left != null && right != null) {
+            return root;        
+        }
+        return left == null ? right : left;         
+    }
+
+
+

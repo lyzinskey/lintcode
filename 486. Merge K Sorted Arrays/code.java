@@ -19,51 +19,52 @@
 
 
 public class Solution {
+    public int[] mergekSortedArrays(int[][] arrayOfArrays) {
+        int[] result = new int[getLength(arrayOfArrays)];
+        PriorityQueue<Element> pq = new PriorityQueue<>(new myComparator());
+        for (int i = 0; i < arrayOfArrays.length; i++) {
+            if (arrayOfArrays[i].length > 0) {
+                pq.offer(new Element(i, 0, arrayOfArrays[i][0]));
+            }
+        }
 
-    public int[] mergekSortedArrays(int[][] arrays) {
-        if (arrays == null || arrays.length == 0) {
-            return new int[] {};
-        }
-        
-        int end = arrays.length - 1;
-        while (end > 0) {
-    		int count = 0, i = 0;
-            while (i <= end - 1) {
-                arrays[count++] = mergeTwo(arrays[i], arrays[i + 1]);
-                i += 2;
-            }
-            if (i == end) {
-                arrays[count++] = arrays[i];
-            }
-            end = count - 1;
-        }
-        return arrays[0];
-    }
-    
-    private int[] mergeTwo(int[] a, int[] b) {
-        int left = 0;
-        int right = 0;
-        int[] result = new int[a.length + b.length];
         int index = 0;
-        
-        while (left < a.length && right < b.length) {
-            if (a[left] < b[right]) {
-                result[index++] = a[left++];
-            }
-            else {
-                result[index++] = b[right++];
+        while (!pq.isEmpty()) {
+            Element elem = pq.poll();
+            result[index++] = elem.value;
+            if (elem.indexInArray < arrayOfArrays[elem.indexOfArray].length - 1) {
+                pq.offer(new Element(elem.indexOfArray, elem.indexInArray + 1, arrayOfArrays[elem.indexOfArray][elem.indexInArray + 1]));
             }
         }
-        
-        while (left < a.length) {
-            result[index++] = a[left++];
-        }
-        while (right < b.length) {
-            result[index++] = b[right++];
-        }
-        
         return result;
-    }    
+    }
+
+    public class Element {
+        int indexOfArray;
+        int indexInArray;
+        int value;
+        Element(int indexOfArray, int indexInArray, int value) {
+            this.indexOfArray = indexOfArray;
+            this.indexInArray = indexInArray;
+            this.value = value;
+        }
+    }
+
+    public class myComparator implements Comparator<Element> {
+        @Override
+        public int compare(Element e1, Element e2) {
+            return e1.value - e2.value;
+        }
+    }
+
+    private int getLength(int[][] arrayOfArrays) {
+        int len = 0;
+        for (int[] array : arrayOfArrays) {
+            len += array.length;
+        }
+        return len;
+    }     
 }
+
 
 

@@ -7,54 +7,34 @@
 //(-1, -1, 2)
 
 
-    public List<List<Integer>> threeSum(int[] numbers) {
+    public List<List<Integer>> threeSum(int[] array) {
+        Arrays.sort(array);
         List<List<Integer>> result = new ArrayList<>();
-
-        if (numbers == null || numbers.length < 3){
-            return result;
-        }
-
-        Arrays.sort(numbers);
-
-        for (int i = 0; i < numbers.length - 2; i++) {
-            if (i > 0 && numbers[i] == numbers[i - 1]){
+        for (int i = 0; i < array.length - 2; i++) {
+            if (i > 0 && array[i] == array[i - 1]) {
                 continue;
             }
             int left = i + 1;
-            int right = numbers.length - 1;
-            int target = -numbers[i];
-
-            twoSum(numbers, left, right, target, result);
+            int right = array.length - 1;
+            while (left < right) {
+                int temp = array[left] + array[right];
+                if (temp + array[i] == 0) {
+                    result.add(Arrays.asList(array[i], array[left], array[right]));
+                    left++;
+                    while (left < right && array[left] == array[left - 1]) {
+                        left++;
+                    }
+                }
+                else if (temp + array[i] < 0) {
+                    left++;
+                }
+                else {
+                    right--;
+                }
+            }      
         }
         return result;
     }
+    
+    
 
-    private void twoSum(int[] numbers, int left, int right, int target, List<List<Integer>> result){
-        while (left < right){
-            if (left < right && numbers[left] + numbers[right] == target){
-                ArrayList<Integer> three = new ArrayList<>();
-                three.add(-target);
-                three.add(numbers[left]);
-                three.add(numbers[right]);
-                result.add(three);
-                left++;
-                right--;
-                
-                while (left < right && numbers[left] == numbers[left - 1]){
-                    left++;
-                }
-                while (left < right && numbers[right] == numbers[right + 1]){
-                    right--;
-                }
-            }
-            
-            else if (left < right && numbers[left] + numbers[right] < target){
-                left++;
-            }
-            else {
-                right--;
-            }
-        }
-    }
-    
-    

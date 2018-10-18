@@ -14,55 +14,70 @@
 
 
 
-class DataStream {
-    private ListNode head, tail;
-    private Map<Integer, ListNode> numToPrev;
-    private Set<Integer> duplicates; 
-    
-    public DataStream() {
-        // dummy
-        head = new ListNode(0);
-        tail = head;
-        
-        numToPrev = new HashMap<>();
-        duplicates = new HashSet<>();
+public class DataStream {
+    static class Node {
+        Node prev;
+        Node next;
+        int key;
+        Node (int key) {
+            this.key = key;
+        }
     }
+
+    private Map<Integer, Node> hashmap;
+    private Node head;
+    private Node tail;
     
-    private void remove(int number) {
-        ListNode prev = numToPrev.get(number);
-        prev.next = prev.next.next;
-        numToPrev.remove(number);
-        
-        // change tail and prev of next
-        if (prev.next != null) {
-            numToPrev.put(prev.next.val, prev);
+    public DataStream(){
+        hashmap = new HashMap<>();
+    }
+
+    public void add(int num) {
+        if (hashmap.containsKey(num)) {
+            Node node = hashmap.get(num);
+            if (node != null) {
+                hashmap.put(num, null);
+                remove(node);
+            }
         } else {
-            tail = prev;
-        }
+            Node node = new Node(num);
+            hashmap.put(num, node);
+            append(node);
+        }        
     }
-    
-    public void add(int number) {
-        if (duplicates.contains(number)) {
-            return;
-        }
-        
-        if (numToPrev.containsKey(number)) {
-            remove(number);
-            duplicates.add(number);
-        } else {
-            ListNode node = new ListNode(number);
-            numToPrev.put(number, tail);
-            tail.next = node;
-            tail = node;
-        }
-    }
-    
+
     public int firstUnique() {
-        if (head.next != null) {
-            return head.next.val;
+        return head.key;
+    }
+    
+    private void remove(Node node) {
+        if (node.prev != null) {
+            node.prev.next = node.next;
         }
-        return -1;
-    } 
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        }
+        if (head == node) {
+            head = head.next;
+        }
+        if (tail == node) {
+            tail = tail.prev;
+        }
+        node.prev = node.next = null;
+    }
+
+    private void append(Node node) {
+        if (head != null) {
+            tail.next = node;
+            node.prev = tail;
+            tail = node;
+        } else {
+            head = tail = node;
+
+        }
+    }    
 }
+
+
 
 

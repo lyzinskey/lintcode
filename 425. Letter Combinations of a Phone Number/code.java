@@ -13,6 +13,7 @@
 
 
 
+// Recursion, DFS
 public class Solution {
     /**
      * @param digits: A digital string
@@ -26,8 +27,6 @@ public class Solution {
         }
         
         Map<Character, char[]> map = new HashMap<>();
-        map.put('0', new char[] {});
-        map.put('1', new char[] {});
         map.put('2', new char[] { 'a', 'b', 'c' });
         map.put('3', new char[] { 'd', 'e', 'f' });
         map.put('4', new char[] { 'g', 'h', 'i' });
@@ -35,11 +34,9 @@ public class Solution {
         map.put('6', new char[] { 'm', 'n', 'o' });
         map.put('7', new char[] { 'p', 'q', 'r', 's' });
         map.put('8', new char[] { 't', 'u', 'v'});
-        map.put('9', new char[] { 'w', 'x', 'y', 'z' });        
+        map.put('9', new char[] { 'w', 'x', 'y', 'z' });                
         
-        StringBuilder sb = new StringBuilder();
-        
-        dfs(digits, result, map, sb);
+        dfs(digits, result, map, new StringBuilder());
         
         return result;
     }
@@ -57,4 +54,37 @@ public class Solution {
         }
     }
 }
+
+
+
+
+// Iteration, BFS
+public class Solution {
+    /**
+     * @param digits: A digital string
+     * @return: all posible letter combinations
+     */
+    public List<String> letterCombinations(String digits) {
+        LinkedList<String> list = new LinkedList<>();
+        
+        if (digits.length() == 0) {
+            return list;
+        }
+        
+        String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        list.add("");
+        
+        while (list.peek().length() != digits.length()) {
+            String peak = list.remove();
+            String map = mapping[digits.charAt(peak.length()) - '0'];
+            char[] charArray = map.toCharArray();
+            for (char ch : charArray) {
+                list.add(peak + ch);
+            }
+        }
+        return list;
+    }
+}
+
+
 

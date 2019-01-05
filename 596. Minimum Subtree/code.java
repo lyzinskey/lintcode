@@ -14,6 +14,9 @@
 //return the node 1.
 
 
+
+
+
 /**
  * Definition of TreeNode:
  * public class TreeNode {
@@ -31,31 +34,33 @@ public class Solution {
      * @param root: the root of binary tree
      * @return: the root of the minimum subtree
      */
-    
-    private TreeNode curr = null;
-    private int prevSum = Integer.MAX_VALUE;
-
     public TreeNode findSubtree(TreeNode root) {
         if (root == null) {
             return null;
         }
         
-        int sum = minSum(root);
-        return curr;
+        TreeNode[] curr = new TreeNode[1];
+        int[] prevSum = new int[1];
+        prevSum[0] = Integer.MAX_VALUE;
+        
+        int sum = minSum(root, curr, prevSum);
+        return curr[0];
     }
     
-    private int minSum(TreeNode root) {
+    private int minSum(TreeNode root, TreeNode[] curr, int[] prevSum) {
         if (root == null) {
             return 0;
         }
         
-        int sum = minSum(root.left) + minSum(root.right) + root.val;
-        if (sum <= prevSum) {
-            prevSum = sum;
-            curr = root;
+        int sum = minSum(root.left, curr, prevSum) + minSum(root.right, curr, prevSum) + root.val;
+        if (sum <= prevSum[0]) {
+            prevSum[0] = sum;
+            curr[0] = root;
         }
         
         return sum;
     }
 }
+
+
 

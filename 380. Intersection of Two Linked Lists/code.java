@@ -14,44 +14,45 @@
 //Your code should preferably run in O(n) time and use only O(1) memory.
 
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;      
- *     }
- * }
- */
- 
-     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null){
-            return null;
+
+    
+    
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int lenA = length(headA);
+        int lenB = length(headB);
+        int diff = Math.abs(lenA - lenB);
+        
+        if (lenA > lenB) {
+            while (diff > 0) {
+                headA = headA.next;
+                diff--;
+            }
+        } else {
+            while (diff > 0) {
+                headB = headB.next;
+                diff--;
+            }
         }
         
-        ListNode connect = headA;
-        while (connect.next != null){
-            connect = connect.next;
-        }
-        connect.next = headB;
-
-        ListNode slow = headA;
-        ListNode fast = headA.next;
-
-        while (fast != slow){
-            if (fast == null || fast.next == null){
-                return null;
-            }
-            fast = fast.next.next;
-            slow = slow.next;
-        }
-        while (headA != slow.next){
+        while (headA != headB) {
             headA = headA.next;
-            slow = slow.next;
+            headB = headB.next;
         }
+        
         return headA;
     }
     
-    
+    private int length(ListNode head) {
+        int length = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            curr = curr.next;
+            length++;
+        }
+        return length;
+    }
+}
+
+
+

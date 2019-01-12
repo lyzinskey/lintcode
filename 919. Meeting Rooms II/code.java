@@ -7,41 +7,49 @@
 
 
 
+
 /**
- * Definition of Interval:
- * public classs Interval {
- *     int start, end;
- *     Interval(int start, int end) {
- *         this.start = start;
- *         this.end = end;
- *     }
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-
-public class Solution {
-    public int minMeetingRooms(List<Interval> intervals) {
-        if (intervals == null || intervals.size() == 0) {
-            return 0;
+class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return 0;            
         }
-
-        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
-        Collections.sort(intervals, new Comparator<Interval>() {
+        
+        Arrays.sort(intervals, new Comparator<Interval>() {
             @Override
-            public int compare(Interval o1, Interval o2) {
-                return o1.start - o2.start;
+            public int compare(Interval i1, Interval i2) {
+                return i1.start - i2.start;
             }
         });
-
-        minHeap.offer(intervals.get(0).end);
-
-        for (int i = 1; i < intervals.size(); i++) {
-            if (minHeap.peek() <= intervals.get(i).start) {
-                minHeap.poll();
+        
+        PriorityQueue<Interval> pq = new PriorityQueue<>(new Comparator<Interval>() {
+            @Override
+            public int compare(Interval i1, Interval i2) {
+                return i1.end - i2.end;
             }
-            minHeap.offer(intervals.get(i).end);
+        });
+        
+        pq.offer(intervals[0]);
+        
+        for (int i = 1; i < intervals.length; i++) {
+            Interval interval = pq.poll();
+            if (intervals[i].start >= interval.end) {
+                interval.end = intervals[i].end;
+            } else {
+                pq.offer(intervals[i]);
+            }
+            pq.offer(interval);
         }
-        return minHeap.size();
-    }    
+        return pq.size();
+    }
 }
 
 

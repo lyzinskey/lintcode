@@ -13,6 +13,7 @@
 // (-2, 0, 0, 2)
 
 
+public class Solution {
     public List<List<Integer>> fourSum(int[] num, int target) {
 		List<List<Integer>> rst = new ArrayList<List<Integer>>();
 		Arrays.sort(num);
@@ -30,17 +31,8 @@
 				int right = num.length - 1;
 				while (left < right) {
 					int sum = num[i] + num[j] + num[left] + num[right];
-					if (sum < target) {
-						left++;
-					} else if (sum > target) {
-						right--;
-					} else {
-						ArrayList<Integer> tmp = new ArrayList<Integer>();
-						tmp.add(num[i]);
-						tmp.add(num[j]);
-						tmp.add(num[left]);
-						tmp.add(num[right]);
-						rst.add(tmp);
+					if (sum == target) {
+					    rst.add(Arrays.asList(num[i], num[j], num[left], num[right]));
 						left++;
 						right--;
 						while (left < right && num[left] == num[left - 1]) {
@@ -49,12 +41,18 @@
 						while (left < right && num[right] == num[right + 1]) {
 							right--;
 						}
+					} else if (sum > target) {
+						right--;
+					} else {
+						left++;
 					}
 				}
 			}
 		}
-
 		return rst;
 	}
+}
   
   
+
+

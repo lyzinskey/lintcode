@@ -20,6 +20,28 @@
  * }
  */
 
+
+
+public class Solution {
+    public int closestValue(TreeNode root, double target) {
+        int closest = root.val;
+        
+        while (root != null) {      
+            if (Math.abs(target - root.val) < Math.abs(target - closest)) {
+                closest = root.val;
+            }
+            if (root.val > target) {
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+        return closest;
+    }
+}
+
+
+
 //算法思路；求出 lowerBound 和 upperBound。即 小于等于 target 的最大值和 大于 target 的最小值。
 //然后在两者之中去比较谁更接近，然后返回即可。
 
@@ -96,4 +118,6 @@ public class Solution {
         return root;
     }    
 }
+
+
 

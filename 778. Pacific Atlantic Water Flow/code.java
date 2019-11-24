@@ -52,7 +52,7 @@ public class Solution {
      * @return: The list of grid coordinates
      */
     
-    // Time: O(mn + (m + n))
+    // Time: O((m + n) + mn)
     // Space: O(mn)
     public List<List<Integer>> pacificAtlantic(int[][] matrix) {
         List<List<Integer>> result = new ArrayList<>();

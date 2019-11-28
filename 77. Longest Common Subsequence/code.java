@@ -17,24 +17,31 @@
 
 
 public class Solution {
+    /**
+     * @param A: A string
+     * @param B: A string
+     * @return: The length of longest common subsequence of A and B
+     */
     public int longestCommonSubsequence(String source, String target) {
-        if (source.length() == 0 || target.length() == 0) {
+        if (source.isEmpty() || target.isEmpty()) {
             return 0;
         }
-    
-        int[][] dp = new int[source.length() + 1][target.length() + 1];
-    
-        for (int i = 1; i <= source.length(); i++) {
-            for (int j = 1; j <= target.length(); j++) {
-                if (source.charAt(i - 1) == target.charAt(j - 1)) {
-                dp[i][j] = dp[i - 1][j - 1] + 1;          
+
+        char[] s = source.toCharArray();
+        char[] t = target.toCharArray();
+        int[][] dp = new int[s.length + 1][t.length + 1];
+
+        for (int i = 1; i < s.length + 1; i++) {
+            for (int j = 1; j < t.length + 1; j++) {     
+                if (s[i - 1] == t[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
                 } else {
-                    dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
                 }
             }
         }
-        return dp[source.length()][target.length()];
-  }
+        return dp[s.length][t.length];
+    }
 }
 
 

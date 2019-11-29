@@ -27,41 +27,48 @@ public class Solution {
         if (points == null || points.length == 0) {
             return 0;
         }
+        int res = 0;
 
-        int result = 0;
-
-        for (int i = 0; i < points.length; i++) {
+        // any line can be represented by a point and a slope
+        // we take the point as seed and find all possible slopes
+        for (int i = 0; i < points.length; i++) {            
             Point seed = points[i];
-            int same = 1;
+            // record slope frequency with point seed
+            Map<Double, Integer> count = new HashMap<>();
+            
+            // record number of duplicate points with seed
+            int duplicate = 1;
+            
+            // record the points with same x
+            // for the special case of infinite slope
             int sameX = 0;
-            int most = 0;
-            HashMap<Double, Integer> cnt = new HashMap<>();
-
-            for (int j = 0; j < points.length; j++) {
-                if (i == j) {
-                    continue;
-                }
-                Point tmp = points[j];
-                if (tmp.x == seed.x && tmp.y == seed.y) {
-                    same++;
-                } else if (tmp.x == seed.x) {
+            
+            // record the max number of points 
+            // on the same line crossing the seed point      
+            int counter = 0;      
+            
+            for (int j = i + 1; j < points.length; j++) {
+                Point point = points[j];
+                if (seed.x == point.x && seed.y == point.y) {
+                    duplicate++;
+                } else if (seed.x == point.x) {
                     sameX++;
                 } else {
-                    double slope = ((tmp.y - seed.y) + 0.0) / (tmp.x - seed.x);
-                    if (!cnt.containsKey(slope)) {
-                        cnt.put(slope, 1);
-                    } else {
-                        cnt.put(slope, cnt.get(slope) + 1);
+                    double slope = (seed.y - point.y + 0.0) / (seed.x - point.x);
+                    if (!count.containsKey(slope)) {
+                        count.put(slope, 0);
                     }
-                    most = Math.max(most, cnt.get(slope));
+                    count.put(slope, count.get(slope) + 1);
+                    counter = Math.max(counter, count.get(slope));
                 }
             }
-            most = Math.max(most, sameX) + same;
-            result = Math.max(result, most);
+            counter = Math.max(counter, sameX) + duplicate;
+            res = Math.max(counter, res);
         }
-        return result;
+        return res;
     }
 }
+
 
 
 

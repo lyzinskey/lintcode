@@ -18,6 +18,7 @@
 
 
 
+
 public class Solution {
     /**
      * @param board: A list of lists of character
@@ -28,51 +29,47 @@ public class Solution {
         List<String> result = new ArrayList<>();
         if (board == null || board.length == 0) {
             return result;
-        }        
-        
-        for (String word : words) {
-            if (exist(board, word)) {
-                result.add(word);
-            }
+        } 
+                
+        for (int i = 0; i < words.size(); i++) {
+            if (exist(board, words.get(i))) {
+                result.add(words.get(i));
+            }            
         }
-        return result;
+        return result;        
     }
     
     private boolean exist(char[][] board, String word) {
-        if (word == null || word.length() == 0) {
-            return true;
-        }
-        
+        boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] == word.charAt(0)) {
-                    if (dfs(board, word, i, j, 0)) {
-                        return true;
-                    }
-                }
-                
+            for (int j = 0; j < board[0].length; j++) {                
+                if (dfs(board, word, i, j, 0, visited)) {
+                    return true;
+                }                                
             }
         }
         return false;
     }
     
-    private boolean dfs(char[][] board, String word, int i, int j, int index) {
+    private boolean dfs(char[][] board, String word, int i, int j, int index, boolean[][] visited) {
         if (index == word.length()) {
             return true;
         }
         
-        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != word.charAt(index)) {
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != word.charAt(index) || visited[i][j]) {
             return false;
         }
         
-        board[i][j] = '?';
-        boolean result = dfs(board, word, i + 1, j, index + 1) ||
-                         dfs(board, word, i - 1, j, index + 1) ||
-                         dfs(board, word, i, j + 1, index + 1) ||
-                         dfs(board, word, i, j - 1, index + 1);
-        board[i][j] = word.charAt(index);
+        visited[i][j] = true;
+        boolean result = dfs(board, word, i + 1, j, index + 1, visited) ||
+                         dfs(board, word, i - 1, j, index + 1, visited) ||
+                         dfs(board, word, i, j + 1, index + 1, visited) ||
+                         dfs(board, word, i, j - 1, index + 1, visited);
+        visited[i][j] = false;
         return result;
     }    
 }
+
+
 
 

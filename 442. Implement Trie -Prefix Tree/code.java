@@ -17,12 +17,23 @@
 //>>> true
 
 
+
+
 public class Trie {
+    class TrieNode {
+        private TrieNode[] child;
+        private boolean isWord;
+        
+        public TrieNode() {
+            this.child = new TrieNode[26];
+            this.isWord = false;
+        }
+    }
     
     private TrieNode root;
     
     public Trie() {
-        root = new TrieNode();
+        this.root = new TrieNode();
     }
 
     /*
@@ -31,14 +42,15 @@ public class Trie {
      */
     public void insert(String word) {
         TrieNode node = root;
-        for (int i = 0; i < word.length(); i++) {
-            char currentChar = word.charAt(i);
-            if (!node.containsKey(currentChar)) {
-                node.put(currentChar, new TrieNode());
+        char[] array = word.toCharArray();
+        for (char ch : array) {
+            int index = ch - 'a';
+            if (node.child[index] == null) {
+                node.child[index] = new TrieNode();
             }
-            node = node.get(currentChar);
+            node = node.child[index];
         }
-        node.setEnd();
+        node.isWord = true;        
     }
 
     /*
@@ -46,67 +58,31 @@ public class Trie {
      * @return: if the word is in the trie.
      */
     public boolean search(String word) {
-       TrieNode node = searchPrefix(word);
-       return node != null && node.isEnd();
+        TrieNode node = find(word);
+        return node != null && node.isWord;        
     }
-    
-    
-    // search a prefix or whole key in trie and
-    // returns the node where search ends
-    private TrieNode searchPrefix(String word) {
-        TrieNode node = root;
-        for (int i = 0; i < word.length(); i++) {
-           char curLetter = word.charAt(i);
-           if (node.containsKey(curLetter)) {
-               node = node.get(curLetter);
-           } else {
-               return null;
-           }
-        }
-        return node;
-    }
-    
 
     /*
      * @param prefix: A string
      * @return: if there is any word in the trie that starts with the given prefix.
      */
     public boolean startsWith(String prefix) {
-        TrieNode node = searchPrefix(prefix);
-        return node != null;
+        return find(prefix) != null;
     }
     
-}
-
-
-class TrieNode {
-
-    // R links to node children
-    private TrieNode[] links;
-
-    private final int R = 26;
-
-    private boolean isEnd;
-
-    public TrieNode() {
-        links = new TrieNode[R];
-    }
-
-    public boolean containsKey(char ch) {
-        return links[ch -'a'] != null;
-    }
-    public TrieNode get(char ch) {
-        return links[ch -'a'];
-    }
-    public void put(char ch, TrieNode node) {
-        links[ch -'a'] = node;
-    }
-    public void setEnd() {
-        isEnd = true;
-    }
-    public boolean isEnd() {
-        return isEnd;
+    private TrieNode find(String input) {
+        TrieNode node = root;
+        char[] array = input.toCharArray();
+        for (char ch : array) {
+            int index = ch - 'a';
+            node = node.child[index];
+            if (node == null) {
+                return node;
+            }
+        }
+        return node;
     }
 }
+
 
 

@@ -18,7 +18,11 @@
 
 
 
+/*
+brute force: for every word, use dfs to search every possible path in board
 
+Time: O(k*m*n * 4^l)    ->  m * n matrix, average length of word is l, size of words is k
+*/
 public class Solution {
     /**
      * @param board: A list of lists of character

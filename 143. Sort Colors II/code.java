@@ -8,48 +8,54 @@
 //A rather straight forward solution is a two-pass algorithm using counting sort. 
 //That will cost O(k) extra memory. Can you do it without using extra memory?
 
+//Notice
+//You are not suppose to use the library's sort function for this problem.
+//k <= n
 
-    public void sortColors2(int[] colors, int k) {
-        if (colors == null || colors.length == 0) {
+
+
+
+public class Solution {
+    /**
+     * @param colors: A list of integer
+     * @param k: An integer
+     * @return: nothing
+     */
+    public void sortColors2(int[] array, int k) {
+        if (array.length <= 2 || k < 2) {
             return;
         }
-        rainbowSort(colors, 0, colors.length - 1, 1, k);
+
+        sort(array, 0, array.length - 1, 1, k);
     }
-    
-    public void rainbowSort(int[] colors,
-                            int left,
-                            int right,
-                            int colorFrom,
-                            int colorTo) {
-        if (colorFrom == colorTo) {
+
+    private void sort(int[] array, int left, int right, int min, int max) {
+        if (left + 1 > right || min >= max) {
             return;
         }
-        
-        if (left >= right) {
-            return;
-        }
-        
-        int colorMid = (colorFrom + colorTo) / 2;
-        int l = left, r = right;
-        while (l <= r) {
-            while (l <= r && colors[l] <= colorMid) {
-                l++;
-            }
-            while (l <= r && colors[r] > colorMid) {
-                r--;
-            }
-            if (l <= r) {
-                int temp = colors[l];
-                colors[l] = colors[r];
-                colors[r] = temp;
-                
-                l++;
-                r--;
+
+        int i = left;
+        int j = right;
+        int mid = min + (max - min) / 2;
+        while (i < j) {
+            if (array[i] <= mid) {
+                i++;
+            } else if (array[j] > mid) {
+                j--;
+            } else {
+                swap(array, i, j);
             }
         }
-        
-        rainbowSort(colors, left, r, colorFrom, colorMid);
-        rainbowSort(colors, l, right, colorMid + 1, colorTo);
+        sort(array, left, i, min, mid);
+        sort(array, j, right, mid + 1, max);
     }
-    
-    
+
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+
+

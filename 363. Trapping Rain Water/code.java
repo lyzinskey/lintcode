@@ -12,8 +12,44 @@
 
 
 
+public class Solution {
+    /**
+     * @param heights: a list of integers
+     * @return: a integer
+     */
+    // Time: O(n)
+    // Space: O(1)
+    public int trapRainWater(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        
+        int l = 0;
+        int r = height.length - 1;
+        int maxL = height[l];
+        int maxR = height[r];
+        int res = 0;
+        
+        while (l < r) {
+            if (maxL < maxR) {
+                res += maxL - height[l];
+                maxL = Math.max(maxL, height[++l]);
+            } else {
+                res += maxR - height[r];
+                maxR = Math.max(maxR, height[--r]);
+            }
+        }
+        return res;
+    }    
+}
+
+
+
+
 
 public class Solution {
+    // Time: O(n)
+    // Space: O(n)    
     public int trapRainWater(int[] height) {
         if (height == null || height.length == 0) {
             return 0;

@@ -8,6 +8,35 @@
 
 
 
+
+
+public class Solution {
+    /*
+     * @param s: A string
+     * @param dict: A dictionary of words dict
+     * @return: A boolean
+     */
+    // Time: O(l^3)
+    // Space: O(l + dict.size)     
+    public boolean wordBreak(String input, Set<String> dict) {
+        boolean[] dp = new boolean[input.length() + 1];
+        dp[0] = true;
+        
+        for (int j = 0; j <= input.length(); j++) {
+            for (int i = j - 1; i >= 0; i--) {
+                if (dp[i] && dict.contains(input.substring(i, j))) {
+                    dp[j] = true;
+                    break;
+                }
+            }
+        }
+        return dp[input.length()];
+    }
+}
+
+
+
+
 public class Solution {
     /*
      * @param s: A string
@@ -54,4 +83,6 @@ public class Solution {
         return maxLength;
     }
 }
+
+
 

@@ -71,3 +71,42 @@ public class Solution {
 
 
 
+
+
+
+public class Solution {
+    /**
+     * @param root: the root
+     * @return: the second minimum value in the set made of all the nodes' value in the whole tree
+     */
+    // Time: O(n) there could be pruning, but the worst case is still O(n)
+    // Space: O(height)    
+    public int findSecondMinimumValue(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }
+        if (root.left == null && root.right == null) {
+            return -1;
+        }
+    
+        int left = root.left.val;
+        int right = root.right.val;
+    
+        // if value same as root value, need to find the next candidate
+        // we need to find candidate in the subtree
+        if (root.left.val == root.val) {
+            left = findSecondMinimumValue(root.left);
+        }
+        if (root.right.val == root.val) {
+            right = findSecondMinimumValue(root.right);
+        }
+        // left and right are both candidate
+        if (left != -1 && right != -1) {
+            return Math.min(left, right);
+        }
+        return left != -1 ? left : right;
+    }  
+}
+
+
+

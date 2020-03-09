@@ -44,6 +44,7 @@
 
 
 
+
 /**
  * Definition of TreeNode:
  * public class TreeNode {
@@ -68,13 +69,13 @@ public class Solution {
     // Space: O(n)
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
         List<Integer> res = new ArrayList<>();
-        distance(root, target, K, res);
+        distanceToTarget(root, target, K, res);
         return res;
     }
 
     // Returns the distance from root to target.
     // Returns -1 if target does not in the tree.
-    private int distance(TreeNode root, TreeNode target, int K, List<Integer> res) {
+    private int distanceToTarget(TreeNode root, TreeNode target, int K, List<Integer> res) {
         if (root == null) {
             return -1;
         }
@@ -83,8 +84,8 @@ public class Solution {
             return 0;
         }
 
-        int l = distance(root.left, target, K, res);
-        int r = distance(root.right, target, K, res);
+        int l = distanceToTarget(root.left, target, K, res);
+        int r = distanceToTarget(root.right, target, K, res);
 
         // Target in the left subtree
         if (l >= 0) {

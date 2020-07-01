@@ -18,7 +18,7 @@
 
 //Example 2:
 //
-/input:n = 8
+//input:n = 8
 //output:3
 //Explanation:
 //The coins can form the following rows:
